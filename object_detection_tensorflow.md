@@ -104,7 +104,7 @@ Model của bạn sẽ làm việc với format `TFRecord`, nên bạn chạy sc
 
 ## Download Pre-Trained Model
 
-Mình đã tải sẵn tải một pre-trained model ở `tensorflow/workspace/pre-trained-models/`, tên là `centernet_hg104_512x512_coco17_tpu-8`. Bạn có thể dùng luôn model này, hoặc tải một model khác [ở đây](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/configuring_jobs.md), và nhớ để bên trong `tensorflow/workspace/pre-trained-models/`.
+Mình đã tải sẵn tải một pre-trained model ở `tensorflow/workspace/pre-trained-models/`, tên là `centernet_hg104_512x512_coco17_tpu-8`. Bạn có thể dùng luôn model này, hoặc tải một model khác [ở đây](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md), và nhớ để bên trong `tensorflow/workspace/pre-trained-models/`.
 
 ## Configure the Training Pipeline
 
