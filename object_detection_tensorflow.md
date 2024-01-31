@@ -8,7 +8,7 @@ Conda là một package manager, giúp bạn tạo một môi trường riêng c
 
 Môi trường Conda cho project hiện tại là `TinChi24`. Bạn kích hoạt môi trường bằng lệnh `conda activate TinChi24`.
 
-# Prepare the Workspace
+# Preparing the Workspace
 
 Bọn mình đã chuẩn bị sẵn directory `tensorflow/` ở `/home/dtth/DuTuyen22/`. Directory trông như sau:
 
@@ -46,7 +46,7 @@ group_1/
 
 Trong phần bên dưới, mình sẽ giả sử tên folder của nhóm bạn là `group_1/`.
 
-# Prepare the Dataset
+# Preparing the Dataset
 
 ## Annotate the Dataset
 
