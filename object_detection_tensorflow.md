@@ -126,13 +126,17 @@ Bạn sẽ điều chỉnh một số parameter. Có thể tham khảo `pipeline
 
 # Training the Model
 
-Bạn chạy script `train_model.sh`, nhớ chỉnh `PATH_TO_CHECKPOINT` phù hợp với tên folder model bạn để trong `group_1/models/`. Nếu chờ một lúc, nó in ra một đống log kiểu `Step X per-step time Ys loss=Z` thì các bạn đang làm đúng.
+Bạn chạy script `train_model.sh`. Nếu chờ một lúc, nó in ra một đống log kiểu `Step X per-step time Ys loss=Z` thì các bạn đang làm đúng.
+
+**Chú ý:** Nhớ chỉnh `PATH_TO_CHECKPOINT` trong `train_model.sh` phù hợp với tên folder model bạn để trong `group_1/models/`.
 
 **Chú ý:** Train model cực kì ngốn VRAM.
 
 # Exporting a Trained Model
 
 Bạn chạy script `export_model.sh` để export model của bạn vào `group_1/exported-models/my_model/`.
+
+**Chú ý:** Nhớ chỉnh `PATH_TO_CHECKPOINT` trong `export_model.sh` phù hợp với tên folder model bạn để trong `group_1/models/`.
 
 # Running a Saved Model
 
