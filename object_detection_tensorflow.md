@@ -58,9 +58,11 @@ Job của bạn là object detection. Do đó, dataset của bạn sẽ bao gồ
 
 ![Image](https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/_images/labelImg.JPG)
 
-(hướng dẫn chi tiết để sử dụng [labelImg](https://github.com/HumanSignal/labelImg) sẽ được cập nhật sau)
+`labelImg` sử dụng GUI, nên bạn không dùng nó trên server được. Nên phải tải `labelImg` về máy bạn, hướng dẫn có ở trên [repo](https://github.com/HumanSignal/labelImg). Bạn annotate dataset trên máy bạn, sau đó tải lại dataset lên `images/all/` trong directory nhóm bạn trên server.
 
-Bạn có thể tạm thời copy directory `images/all/` trong `training_demo/` vào project của bạn để train môt model nhận diện xe ô tô, nếu bạn chưa chuẩn bị dataset mà muốn dùng thử model luôn.
+GUI khá là intuitive. Để tiện annotate nhanh một lượng lớn ảnh thì bạn có thể bật `View/Auto Save Mode`,
+
+Bạn cũng có thể tạm thời copy directory `images/all/` trong `training_demo/` vào project của bạn để train môt model nhận diện xe ô tô, nếu bạn chưa chuẩn bị dataset mà muốn dùng thử model luôn.
 
 ## Partition the Dataset
 
