@@ -36,7 +36,7 @@ workspace/
 Khi tạo folder cho nhóm bạn, hãy copy cả mấy bash script đuôi `.sh` mà mình đã chuẩn bị trong `training_demo/`. Bạn cũng có thể tự customise các script này nếu cần sau khi hiểu mỗi script làm những gì.
 
 ```
-group_1/
+YOUR_PROJECT/
 └─ export_model.sh
 └─ generate_tfrecord.sh
 └─ inference.sh
@@ -44,7 +44,7 @@ group_1/
 └─ train_model.sh
 ```
 
-Trong phần bên dưới, mình sẽ giả sử tên folder của nhóm bạn là `group_1/`.
+Trong phần bên dưới, mình sẽ giả sử tên folder của nhóm bạn là `YOUR_PROJECT/`.
 
 # Preparing the Dataset
 
@@ -66,10 +66,10 @@ Bạn cũng có thể tạm thời copy directory `images/all/` trong `training_
 
 ## Partition the Dataset
 
-Ảnh trong dataset của bạn sẽ nằm trong directory `group_1/images/`, và sẽ được phân hoạch vào hai directory con `train/` và `test/`, chẳng hạn:
+Ảnh trong dataset của bạn sẽ nằm trong directory `YOUR_PROJECT/images/`, và sẽ được phân hoạch vào hai directory con `train/` và `test/`, chẳng hạn:
 
 ```
-group_1/
+YOUR_PROJECT/
 └─ images/
    └─ train/
       └─ training_image_1.jpg
@@ -83,13 +83,13 @@ group_1/
 
 Ảnh trong `train/` sẽ được dùng để  train model, còn ảnh trong `test/` sẽ dùng để đánh giá model. Thường thì ảnh sẽ được phân hoạch vào `train/` và `test/` theo tỉ lệ 9 : 1.
 
-Bạn có thể để dataset đã annotate vào trong `group_1/images/all/` và chạy `partition_dataset.sh` để tự động phân hoạch dataset.
+Bạn có thể để dataset đã annotate vào trong `YOUR_PROJECT/images/all/` và chạy `partition_dataset.sh` để tự động phân hoạch dataset.
 
 ## Create Label Map
 
 Đơn giản là bạn thiết lập rằng bạn muốn detect những loại object nào và gán id cho mỗi object. Bạn tạo file `label_map.pbtxt`, và để trong `annotations/`.
 
-Chẳng hạn, nếu bạn muốn detect một loại object là xe ô tô như trong `training_demo/`, thì `group_1/annotations/label_map.pbtxt` trông như sau:
+Chẳng hạn, nếu bạn muốn detect một loại object là xe ô tô như trong `training_demo/`, thì `YOUR_PROJECT/annotations/label_map.pbtxt` trông như sau:
 
 ```
 item {
@@ -100,7 +100,7 @@ item {
 
 ## Create TensorFlow Records
 
-Model của bạn sẽ làm việc với format `TFRecord`, nên bạn chạy script `generate_tfrecord.sh` để  từ mấy file `.xml` bạn xuất ra được mấy file `.record` trong `group_1/annotations/`.
+Model của bạn sẽ làm việc với format `TFRecord`, nên bạn chạy script `generate_tfrecord.sh` để  từ mấy file `.xml` bạn xuất ra được mấy file `.record` trong `YOUR_PROJECT/annotations/`.
 
 # Configuring a Training Job
 
@@ -110,10 +110,10 @@ Mình đã tải sẵn tải một pre-trained model ở `tensorflow/workspace/p
 
 ## Configure the Training Pipeline
 
-Tạo directory `group_1/model/<một cái tên nào đó>/`. Chẳng hạn, mình dùng pre-trained model là `centernet_hg104_512x512_coco17_tpu-8`, nên sẽ đặt tên model mình sắp train là `my_centernet_hg104_512x512_coco17_tpu-8`. Sau đó copy file `pipeline.config` ở trong model bạn vừa tải (hoặc trong `tensorflow/workspace/pre-trained-models/centernet_hg104_512x512_coco17_tpu-8/` bọn mình đã tải sẵn) vào trong đây.
+Tạo directory `YOUR_PROJECT/model/<một cái tên nào đó>/`. Chẳng hạn, mình dùng pre-trained model là `centernet_hg104_512x512_coco17_tpu-8`, nên sẽ đặt tên model mình sắp train là `my_centernet_hg104_512x512_coco17_tpu-8`. Sau đó copy file `pipeline.config` ở trong model bạn vừa tải (hoặc trong `tensorflow/workspace/pre-trained-models/centernet_hg104_512x512_coco17_tpu-8/` bọn mình đã tải sẵn) vào trong đây.
 
 ```
-group_1/
+YOUR_PROJECT/
 └─ my_centernet_hg104_512x512_coco17_tpu-8/
    └─ pipeline.config
 ```
@@ -124,21 +124,21 @@ Bạn sẽ điều chỉnh một số parameter. Có thể tham khảo `pipeline
 - `batch_size`: Lượng dataset mà model làm việc với trong một lần training. `batch_size` càng lớn thì thời gian cần để train càng giảm, nhưng sẽ ngốn nhiều VRAM hơn. Khi chạy trên server này thì hãy để là `2`, nếu không sẽ bị `Out of Memory`.
 - `fine_tune_checkpoint`: Path đến checkpoint của pre-trained model bạn đã tải. Chẳng hạn nếu dùng `centernet_hg104_512x512_coco17_tpu-8` thì hãy để là `/home/dtth/DuTuyen22/tensorflow/workspace/pre-trained-models/centernet_hg104_512x512_coco17_tpu-8/checkpoint/ckpt-0`.
 - `num_steps`: Số bước để train model. Để khoảng vài nghìn đến vài chục nghìn, tùy vào độ phức tạp của job của bạn. Lúc bọn mình chạy cái detect xe ô tô thì mất khoảng 0.5 giây mỗi bước, và để 2000 bước là được một cái model khá chính xác.
-- `label_map_path`, `input_path` trong `train_input_reader` và `eval_input_reader`: Path đến `label_map.pbtxt`, `test.record`, `train.record` trong `group_1/annotations/`.
+- `label_map_path`, `input_path` trong `train_input_reader` và `eval_input_reader`: Path đến `label_map.pbtxt`, `test.record`, `train.record` trong `YOUR_PROJECT/annotations/`.
 
 # Training the Model
 
 Bạn chạy script `train_model.sh`. Nếu chờ một lúc, nó in ra một đống log kiểu `Step X per-step time Ys loss=Z` thì các bạn đang làm đúng.
 
-**Chú ý:** Nhớ chỉnh `PATH_TO_CHECKPOINT` trong `train_model.sh` phù hợp với tên folder model bạn để trong `group_1/models/`.
+**Chú ý:** Nhớ chỉnh `PATH_TO_CHECKPOINT` trong `train_model.sh` phù hợp với tên folder model bạn để trong `YOUR_PROJECT/models/`.
 
 **Chú ý:** Train model cực kì ngốn VRAM.
 
 # Exporting a Trained Model
 
-Bạn chạy script `export_model.sh` để export model của bạn vào `group_1/exported-models/my_model/`.
+Bạn chạy script `export_model.sh` để export model của bạn vào `YOUR_PROJECT/exported-models/my_model/`.
 
-**Chú ý:** Nhớ chỉnh `PATH_TO_CHECKPOINT` trong `export_model.sh` phù hợp với tên folder model bạn để trong `group_1/models/`.
+**Chú ý:** Nhớ chỉnh `PATH_TO_CHECKPOINT` trong `export_model.sh` phù hợp với tên folder model bạn để trong `YOUR_PROJECT/models/`.
 
 # Running a Saved Model
 
